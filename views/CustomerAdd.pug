@@ -11,17 +11,20 @@ html(lang="en")
             if typeof alert != 'undifined' 
                 p= alert  
         div(style="margin: 50px 600px 50px 600px")
-            form(method="POST" action="/customers/add") 
-                label.form-label.mx-2.mx-3= "Name"
+            form(method="POST" action="/customers/add" enctype="multipart/form-data") 
+                label.form-label.mx-2= "Name"
                 input.form-control.rounded.shadow-lg(type="text" name="name" id="name" placeholder="Name")
                 br
-                label.form-label.mx-2.mx-3= "Email"
+                label.form-label.mx-2= "Select File"
+                input.form-control.rounded.shodow-lg(type="file")
+                br
+                label.form-label.mx-2= "Email"
                 input.form-control.rounded.shadow-lg(type="text" name="email" id="" placeholder="Email")
                 br
-                label.form-label.mx-2.mx-3= "Password"
+                label.form-label.mx-2= "Password"
                 input.form-control.rounded.shadow-lg(type="password" name="password" placeholder="password")
                 br
-                label.form-label.mx-2.mx-3= "Phone No"
+                label.form-label.mx-2= "Phone No"
                 input.form-control.rounded.shadow-lg(type="text" name="phonenumber" placeholder="Phone No")
                 br
                 center 
