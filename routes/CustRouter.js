@@ -3,6 +3,25 @@ const router = require('express').Router();
 //const registerMiddleware = require('../schema/validator_middleware');
 const { body, validationResult } = require('express-validator');
 const Customer = require('../models/Customer');
+const multer = require('multer');
+
+//Difine storage for images
+const storage = multer.diskStorage({
+    //destination for file
+    destination:(req,file,cb) => {     //request,file,callback
+        cb(null, './public/profile');
+    },
+    //add back the extension
+    filename:(req,file,cb) => {
+        cb(null,Date.now() + file.originalname);
+    },
+});
+
+//upload parameter for multer
+const upload = multer({
+    storage:storage
+}).single('image');
+
 
 router.get('/', (req,res) => {
     Customer.find((err,data) => {
@@ -16,9 +35,10 @@ router.get('/addnew', (req,res) => {
     res.status(200).render('CustomerAdd');
 });
 
-router.post('/add',(req,res) => {
+router.post('/add',upload ,(req,res) => {
     let cust = new Customer({
         name : req.body.name,
+        photo : req.file.filename,  //body not required
         email : req.body.email,
         password : req.body.password,
         phonenumber : req.body.phonenumber
@@ -39,16 +59,41 @@ router.post('/edit', (req,res) => {
         });
 });
 
-router.post('/edits', (req,res) => {
-    Customer.findByIdAndUpdate(
-        {'_id':req.body.id},
-        req.body,
-        {new:true},
-        (err, data) => {
-            if(err) return res.status(500).send("There was a problem finding.");
-            res.redirect('/customers');
+router.post('/edits', upload, (req,res) => {
+    if(req.file){
+        let dataBody = {
+            name : req.body.name,
+            photo : req.file.filename,  //body not required
+            email : req.body.email,
+            password : req.body.password,
+            phonenumber : req.body.phonenumber
         }
-    );
+        Customer.findByIdAndUpdate(
+            {'_id':req.body.id},
+            dataBody,
+            {new:true},
+            (err, data) => {
+                if(err) return res.status(500).send("There was a problem finding.");
+                res.redirect('/customers');
+            }
+        );
+    }else {
+        let dataBody = {
+            name : req.body.name,
+            email : req.body.email,
+            password : req.body.password,
+            phonenumber : req.body.phonenumber
+        }
+        Customer.findByIdAndUpdate(
+            {'_id':req.body.id},
+            dataBody,
+            {new:true},
+            (err, data) => {
+                if(err) return res.status(500).send("There was a problem finding.");
+                res.redirect('/customers');
+            }
+        );
+    }
 });
 
 router.post('/delete', (req,res) => {

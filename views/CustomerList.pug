@@ -13,6 +13,7 @@ html(lang="en")
             table.table.table-dark.table-striped.shadow-lg.rounded
                 tr 
                     th= "Name"
+                    th= "Profile"
                     th= "Email"
                     th= "Password"
                     th= "Phone No"
@@ -20,6 +21,8 @@ html(lang="en")
                 for customer in customerList
                     tr 
                         td= customer.name
+                        td
+                            img(src=`/profile/${customer.photo}`, alt="image not found", style="width:100px; height:100px")
                         td= customer.email
                         td= customer.password
                         td= customer.phonenumber
