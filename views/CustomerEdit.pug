@@ -1,0 +1,30 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous")
+        title= 'Edit Customer'
+        body.bg-secondary 
+            center
+                h1= 'Edit Customer'
+            hr
+            div(style="margin: 50px 600px 50px 600px")
+                form(method="POST" action="/customers/edits") 
+                    input(type="hidden", name="id", value=`${List._id}`)
+                    label.form-label.mx-2.mx-3= "Name"
+                    input.form-control.rounded.shadow-lg(type="text" value=`${List.name}` name="name" id="name" placeholder="Name")
+                    br
+                    label.form-label.mx-2.mx-3= "Email"
+                    input.form-control.rounded.shadow-lg(type="text" value=`${List.email}` name="email" id="email" placeholder="Email")
+                    br
+                    //- label.form-label.mx-2.mx-3= "Password"
+                    //- input.form-control.rounded.shadow-lg(type="password" value=`${Customer.name}` name="password" id="password" placeholder="password")
+                    //- br
+                    label.form-label.mx-2.mx-3= "Phone No"
+                    input.form-control.rounded.shadow-lg(type="text" value=`${List.phonenumber}` name="phonenumber" id="phonenumber" placeholder="Phone No")
+                    br
+                    center 
+                        input.btn.btn-success.rounded.shadow-lg(type="submit" value="Edit" style="padding: 10px 40px")
+
