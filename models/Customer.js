@@ -4,6 +4,7 @@ const mongoose = require('../config/db');
 //Schema
 let CustSchema = mongoose.Schema({
     name: String,
+    photo: String,
     email: String,
     password: String,
     phonenumber: Number,
