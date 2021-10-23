@@ -17,24 +17,16 @@ router.get('/addnew', (req,res) => {
 });
 
 router.post('/add',(req,res) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        //return response.status(422).jsonp(adderrors.array());
-        const alert = errors.array();
-        res.render('BookAdd', {alert: alert})
-    }
-    else{
-        let cust = new Customer({
-            name : req.body.name,
-            email : req.body.email,
-            password : req.body.password,
-            phonenumber : req.body.phonenumber
-        });
-        cust.save((err,data) => {
-            if(err) return res.status(500).send("there was a problem saving.");
-            res.redirect('/customers');
-        });
-    }
+    let cust = new Customer({
+        name : req.body.name,
+        email : req.body.email,
+        password : req.body.password,
+        phonenumber : req.body.phonenumber
+    });
+    cust.save((err,data) => {
+        if(err) return res.status(500).send("there was a problem saving.");
+        res.redirect('/customers');
+    });
 });
 
 router.post('/edit', (req,res) => {
