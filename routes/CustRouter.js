@@ -18,9 +18,13 @@ const storage = multer.diskStorage({
 });
 
 //upload parameter for multer
-const upload = multer({
+const uploadSingle = multer({
     storage:storage
 }).single('image');
+
+const uploadMultiple = multer({    
+    storage:storage
+}).array('image',3);
 
 
 router.get('/', (req,res) => {
@@ -35,7 +39,7 @@ router.get('/addnew', (req,res) => {
     res.status(200).render('CustomerAdd');
 });
 
-router.post('/add',upload ,(req,res) => {
+router.post('/add', uploadSingle, (req,res) => {
     let cust = new Customer({
         name : req.body.name,
         photo : req.file.filename,  //body not required
@@ -59,7 +63,7 @@ router.post('/edit', (req,res) => {
         });
 });
 
-router.post('/edits', upload, (req,res) => {
+router.post('/edits', uploadSingle, (req,res) => {
     if(req.file){
         let dataBody = {
             name : req.body.name,
