@@ -41,18 +41,11 @@ router.get('/addnew', (req,res) => {
 });
 
 router.post('/add', uploadSingle, (req,res) => {
-
-    //hashing the passwords(imp)('dcryptjs'(pkg))
-
-    const pass = req.body.password;
-    //console.log(dcrypt.hash(pass,10));
-    const dpass = dcrypt.hash(pass,10);
-
     let cust = new Customer({
         name : req.body.name,
         photo : req.file.filename,  //body not required
         email : req.body.email,
-        password : dpass,
+        password : dcrypt.hash(req.body.password,10), //10 means number of times dcript
         phonenumber : req.body.phonenumber
     });
     cust.save((err,data) => {
