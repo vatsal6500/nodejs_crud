@@ -1,7 +1,7 @@
 const router = require('express').Router();
 //const schema = require('../schema/validate-schema');
 //const registerMiddleware = require('../schema/validator_middleware');
-const { body, validationResult } = require('express-validator');
+//const { body, validationResult } = require('express-validator');
 const Customer = require('../models/Customer');
 const multer = require('multer');
 
@@ -48,7 +48,7 @@ router.post('/add', uploadSingle, (req,res) => {
         phonenumber : req.body.phonenumber
     });
     cust.save((err,data) => {
-        if(err) return res.status(500).send("there was a problem saving.");
+        if(err) return res.status(500).send("there was a problem saving." + err);
         res.redirect('/customers');
     });
 });
