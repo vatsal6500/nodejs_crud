@@ -1,7 +1,4 @@
 const router = require('express').Router();
-//const schema = require('../schema/validate-schema');
-//const registerMiddleware = require('../schema/validator_middleware');
-//const { body, validationResult } = require('express-validator');
 const Customer = require('../models/Customer');
 const multer = require('multer');
 const dcrypt = require('dcryptjs');
