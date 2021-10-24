@@ -2,10 +2,10 @@
 const mongoose = require('../config/db');
 
 //Schema
-let CustSchema = mongoose.Schema({
+let CustSchema = new mongoose.Schema({
     name: String,
     photo: String,
-    email: String,
+    email: { type:String, unique:true },
     password: String,
     phonenumber: Number
 });
