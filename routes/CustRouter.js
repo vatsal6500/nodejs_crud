@@ -33,6 +33,10 @@ router.get('/', (req,res) => {
     });
 });
 
+router.get('/login', (req,res) => {
+    res.render('CustLogin',{ title:"Login" });
+})
+
 router.get('/addnew', (req,res) => {
     res.status(200).render('CustomerAdd');
 });
