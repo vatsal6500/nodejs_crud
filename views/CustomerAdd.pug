@@ -6,11 +6,8 @@ html(lang="en")
     body.bg-secondary 
         center
             h1= 'Add Customer'
-        hr
-        .container 
-            if typeof alert != 'undifined' 
-                p= alert  
-        div(style="margin: 50px 600px 50px 600px")
+        hr 
+        div(style="margin: 50px 35% 50px 35%")
             form(method="POST" action="/customers/add" enctype="multipart/form-data") 
                 label.form-label.mx-2= "Name"
                 input.form-control.rounded.shadow-lg(type="text" name="name" id="name" placeholder="Name")
