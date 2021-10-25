@@ -7,7 +7,7 @@ const sign = (req,res) => {
     console.log(token);
     res.cookie("token",token,{maxAge:expireSec*1000});
     //res.send(token);
-    res.redirect('/home',200);
+    res.redirect('/home');
 };
 
 const verify = (req,res,next) =>  {
