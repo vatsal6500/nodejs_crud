@@ -4,8 +4,6 @@ const key = "kjabsdkfjb273ry8273yit2jn38t7y12093ut92n3kfjho283yglk2n3pg87hwerjsb
 const expireSec = 3000;
 const Customer = require('../models/Customer');
 const dcrypt = require('dcryptjs');
-const { hash } = require('dcryptjs');
-const { contentSecurityPolicy } = require('helmet');
 
 router.get('/', (req,res) => {
     res.status(200).render("Home");
