@@ -33,31 +33,6 @@ router.get('/', (req,res) => {
     });
 });
 
-router.get('/login', (req,res) => {
-    res.render('CustLogin',{ title:"Login" });
-})
-
-router.post('/login', (req,res) => {
-    console.log(req.body);
-    const { email, password } = req.body;
-    //res.json(`${email} ${password}`);
-    Customer.findOne({email: email,password: password})
-    .then((result) => {
-        try{
-            if(result){
-                res.json(result);
-            }
-            else{
-                res.json({message:"Invalid email/password"});
-            }
-        }
-        catch(error){
-            res.send(error.message);
-        }
-        
-    })
-    .catch((err) => res.json(err))
-});
 
 router.get('/addnew', (req,res) => {
     res.status(200).render('CustomerAdd');
