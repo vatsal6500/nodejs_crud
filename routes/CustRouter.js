@@ -3,6 +3,7 @@ const Customer = require('../models/Customer');
 const multer = require('multer');
 const dcrypt = require('dcryptjs');
 
+const { body, check, validationResult} = require('express-validator');
 //Difine storage for images
 const storage = multer.diskStorage({
     //destination for file
@@ -38,19 +39,48 @@ router.get('/addnew', (req,res) => {
     res.status(200).render('CustomerAdd');
 });
 
-router.post('/add', uploadSingle, (req,res) => {
-    let cust = new Customer({
-        name : req.body.name,
-        photo : req.file.filename,  //body not required
-        email : req.body.email,
-        password : dcrypt.hash(req.body.password,10), //10 means number of times dcript
-        phonenumber : req.body.phonenumber
-    });
-    cust.save((err,data) => {
-        if(err) return res.status(500).send("there was a problem saving." + err);
-        res.redirect('/customers');
-    });
-});
+router.post(
+    '/add',
+    [
+        body('name')
+            .exists().withMessage("name required")
+            .isLength({min:3}).withMessage("min 3"),
+        body('email')
+            .exists().withMessage("Email Required")
+            .isEmail().normalizeEmail().withMessage("Invalid email"),
+        body('password')
+            .exists().withMessage("password required")
+            .isLength({min:5}).withMessage("min 5"),
+        body('phonenumber')
+            .exists().withMessage("phone no required")
+            .isLength({min:10,max:10}).withMessage("must be 10")
+            
+    ],
+    uploadSingle,
+    (req,res) => {
+
+        let error = validationResult(req);
+        console.log(error);
+        if(!error.isEmpty()){
+            return res.status(400).jsonp({errors: error.array()});
+        }
+
+        let cust = new Customer({
+            name : req.body.name,
+            photo : req.file.filename,  //body not required
+            email : req.body.email,
+            password : dcrypt.hash(req.body.password,10), //10 means number of times dcript
+            phonenumber : req.body.phonenumber
+        });
+
+        return res.json(cust);
+
+        // cust.save((err,data) => {
+        //     if(err) return res.status(500).send("there was a problem saving." + err);
+        //     res.redirect('/customers');
+        // });
+    }
+);
 
 router.post('/edit', (req,res) => {
     Customer.findById(

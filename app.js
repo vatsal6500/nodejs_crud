@@ -26,7 +26,7 @@ app.use(cookieparser());
 
 //routes
 app.use('/books', verify,bookRouter);
-app.use('/customers', verify,custRouter);
+app.use('/customers',custRouter);
 app.use('/home',homeRouter);
 app.get('/gettoken');
 
